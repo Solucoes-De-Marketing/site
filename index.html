@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MF - Soluções de marketing</title>
     
+    <!-- Metatags para o ícone do navegador (favicon) -->
+    <link rel="icon" href="https://raw.githubusercontent.com/Solucoes-De-Marketing/MF/main/images/logo_V1_no_bg.png" type="image/png">
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/Solucoes-De-Marketing/MF/main/images/logo_V1_no_bg.png" type="image/png">
+
+    <!-- Metatags para prévia de links (Open Graph Protocol) -->
+    <meta property="og:title" content="MF - Soluções de marketing">
+    <meta property="og:description" content="Sua marca não pode se esconder atrás de posts fracos. Criamos criativos e conteúdos que chamam atenção, geram desejo e trazem clientes. Mesmo com baixo orçamento, entregamos resultados profissionais.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/Solucoes-De-Marketing/MF/main/images/logo_V1_no_bg.png">
+    <meta property="og:url" content="https://mf-solucoes.com.br">
+    <meta property="og:type" content="website">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -17,59 +28,101 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        /* Estilos personalizados para complementar o Tailwind */
+        /* Estilos base */
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #111827; /* Fundo escuro (cinza-azulado) */
-            color: #F3F4F6; /* Texto claro */
+            background-color: #0c0a18; /* Fundo sólido para garantir visibilidade do conteúdo */
+            color: #F3F4F6;
+            overflow-x: hidden;
         }
 
-        /* Estilizando a barra de rolagem da galeria do portfólio */
-        .portfolio-gallery::-webkit-scrollbar {
-            height: 8px;
-        }
-        .portfolio-gallery::-webkit-scrollbar-track {
-            background: #1F2937; /* Cor da trilha da barra de rolagem */
-            border-radius: 10px;
-        }
-        .portfolio-gallery::-webkit-scrollbar-thumb {
-            background-color: #38bdf8; /* Cor da barra de rolagem (azul vibrante) */
-            border-radius: 10px;
-            border: 2px solid #1F2937;
+        /* Nova camada para a imagem de fundo com opacidade baixa */
+        #background-image-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2; /* Fica abaixo do fundo de estrelas */
+            opacity: 0.10; /* Opacidade controlada aqui */
+            background-image: url('https://static.vecteezy.com/system/resources/previews/038/816/368/non_2x/ai-generated-elegant-cosmic-structures-and-shapes-adorn-the-minimalist-space-backdrop-free-photo.jpeg');
+            background-size: cover;
+            background-position: center;
         }
 
-        /* Animações */
-        @keyframes fadeInUp {
+        /* Fundo estrelado animado */
+        #star-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Fica acima da imagem, mas abaixo do conteúdo */
+            overflow: hidden;
+            background: radial-gradient(ellipse at bottom, rgba(27, 39, 53, 0.2) 0%, rgba(9, 10, 15, 0.5) 100%);
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: move-stars linear infinite;
+        }
+
+        @keyframes move-stars {
+            from {
+                transform: translateY(0px);
+            }
+            to {
+                transform: translateY(-2000px);
+            }
+        }
+        
+        /* Animações de entrada para a headline */
+        .animate-headline span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(30px) rotate(5deg);
+            animation: reveal-word 1.2s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+        }
+
+        @keyframes reveal-word {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px) rotate(5deg);
             }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotate(0);
+            }
+        }
+        
+        /* Animação de destaque para a palavra "vendem" */
+        .highlight-word {
+            animation: highlight-glow 2.5s ease-in-out 1.5s infinite alternate;
+        }
+        
+        @keyframes highlight-glow {
+            from {
+                text-shadow: 0 0 8px rgba(14, 165, 233, 0.5), 0 0 10px rgba(56, 189, 248, 0.3);
+            }
+            to {
+                text-shadow: 0 0 25px rgba(56, 189, 248, 1), 0 0 40px rgba(14, 165, 233, 0.8);
+            }
+        }
+
+        /* Animação de entrada para outros elementos */
+        .animate-fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-        
-        .animate-fadeInUp {
-            animation: fadeInUp 0.8s ease-out forwards;
-        }
-        
-        .animate-pulse-slow {
-            animation: pulse 2.5s infinite ease-in-out;
-        }
-
-        /* Esconde a barra de rolagem principal quando o modal está aberto */
-        .modal-open {
-            overflow: hidden;
         }
 
         /* Animações de Scroll (Pop-up) */
@@ -83,42 +136,193 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Estilo dos botões translúcidos */
+        .btn-translucent {
+            position: relative;
+            overflow: hidden;
+            background-color: rgba(14, 165, 233, 0.15);
+            border: 1px solid rgba(14, 165, 233, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), 
+                        inset 0 0 10px rgba(14, 165, 233, 0.2);
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            animation: pulse-glow 3s infinite ease-in-out;
+        }
+
+        .btn-translucent:hover {
+            background-color: rgba(14, 165, 233, 0.3);
+            border-color: rgba(56, 189, 248, 1);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.3), 
+                        inset 0 0 15px rgba(56, 189, 248, 0.4);
+        }
+        
+        .btn-translucent::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 75%;
+            height: 100%;
+            background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            transition: left 0.7s ease-in-out;
+        }
+        
+        .btn-translucent:hover::before {
+            left: 150%;
+        }
+        
+        .btn-translucent-whatsapp {
+            background-color: rgba(74, 222, 128, 0.15);
+            border: 1px solid rgba(74, 222, 128, 0.5);
+            animation: pulse-glow-whatsapp 2.5s infinite ease-in-out;
+        }
+
+        .btn-translucent-whatsapp:hover {
+             background-color: rgba(74, 222, 128, 0.3);
+             border-color: rgba(134, 239, 172, 1);
+             box-shadow: 0 10px 30px rgba(74, 222, 128, 0.4), 
+                         inset 0 0 15px rgba(134, 239, 172, 0.4);
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(14, 165, 233, 0.2), inset 0 0 8px rgba(14, 165, 233, 0.1); }
+            50% { box-shadow: 0 0 30px rgba(14, 165, 233, 0.4), inset 0 0 12px rgba(14, 165, 233, 0.3); }
+        }
+        
+        @keyframes pulse-glow-whatsapp {
+            0%, 100% { box-shadow: 0 0 20px rgba(74, 222, 128, 0.3), inset 0 0 10px rgba(74, 222, 128, 0.2); }
+            50% { box-shadow: 0 0 35px rgba(74, 222, 128, 0.6), inset 0 0 15px rgba(134, 239, 172, 0.4); }
+        }
+
+        /* Estilos do carrossel */
+        #carousel-slides-container {
+            position: relative;
+            width: 100%;
+            padding-top: 75%;
+            background-color: #1f2937;
+            border-radius: 0.75rem;
+            overflow: hidden;
+        }
+        
+        .comparison-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            cursor: ew-resize;
+        }
+        .comparison-slider img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+        }
+        .comparison-before-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            border-right: 3px solid white;
+        }
+        .comparison-handle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 3px;
+            height: 100%;
+            background-color: white;
+            pointer-events: none;
+            z-index: 5;
+        }
+        
+        /* Estilos da seção de depoimentos */
+        .testimonial-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Estilos do FAQ */
+        .faq-item {
+            cursor: pointer;
+        }
+        
+        .faq-question {
+            transition: color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: #60a5fa; /* Cor azul claro */
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer-container {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        .faq-answer {
+            overflow: hidden;
+        }
+
+        .faq-item.active .faq-answer-container {
+            grid-template-rows: 1fr;
+        }
+
     </style>
 </head>
 <body class="antialiased">
+    <!-- Camada da imagem de fundo com opacidade -->
+    <div id="background-image-layer"></div>
+    
+    <!-- Fundo animado -->
+    <div id="star-background"></div>
 
     <!-- ===== Cabeçalho ===== -->
-    <header class="absolute top-0 left-0 w-full z-10 p-6 md:p-8">
+    <header class="absolute top-0 left-0 w-full z-10 p-4 md:p-6">
         <div class="container mx-auto flex justify-between items-center">
-            <!-- LOGO DA SUA EMPRESA -->
-            <a href="#" class="text-2xl font-bold flex items-center gap-2">
-                <!-- COMENTÁRIO IMPORTANTE:
-                Substitua o link da imagem abaixo pelo link do seu logo real.
-                Mantenha a tag <img> para exibir a imagem. -->
-                <img src="https://github.com/matheusdefreitas277-hue/site-teste-01/blob/main/Design_sem_nome__1_-removebg-preview.png?raw=true" alt="Logo da Sua Empresa" class="w-16 h-16">
-                
-                <!-- COMENTÁRIO IMPORTANTE:
-                Substitua o texto 'Teste Nome' pelo nome da sua empresa. -->
-                Soluções De Marketing
+            <a href="#" class="text-xl font-bold flex items-center gap-2">
+                <img src="https://raw.githubusercontent.com/Solucoes-De-Marketing/MF/main/images/logo_V1_no_bg.png" alt="Logo da Sua Empresa" class="w-12 h-12 md:w-14 md:h-14">
+                <span>Soluções De Marketing</span>
             </a>
         </div>
     </header>
 
     <main>
         <!-- ===== Seção Inicial (Hero) ===== -->
-        <section id="hero" class="min-h-screen flex items-center justify-center text-center bg-gray-900/30 backdrop-blur-sm pt-20 pb-10 px-6">
-            <div class="container mx-auto max-w-4xl space-y-6">
-                <!-- TEXTO PRINCIPAL (COPY CHAMATIVA) -->
-                <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight animate-fadeInUp" style="animation-delay: 0.2s;">
-                    Transforme seu produto com imagens que <span class="bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-cyan-300">vendem.</span>
+        <section id="hero" class="relative min-h-screen flex items-center justify-center text-center pt-24 pb-12 px-4 sm:px-6">
+            <div class="container mx-auto max-w-4xl space-y-6 z-10">
+                <!-- TEXTO PRINCIPAL COM ANIMAÇÃO -->
+                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight animate-headline">
+                    <!-- As palavras são separadas em spans para animar individualmente -->
                 </h1>
                 
-                <!-- PARÁGRAFO EXPLICATIVO (COPY PERSUASIVA) -->
-                <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto animate-fadeInUp" style="animation-delay: 0.4s;">
-                    Sua marca não pode se esconder atrás de posts fracos. Nós criamos criativos, banners e conteúdos que chamam atenção, geram desejo e trazem clientes para perto de você. Mesmo com baixo orçamento, entregamos resultados profissionais. Contamos com uma equipe de profissionais qualificados que utilizam as melhores ferramentas de design e manipulação de imagens do mercado.
+                <!-- PARÁGRAFO EXPLICATIVO -->
+                <p class="text-base md:text-lg text-gray-300 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 1s;">
+                    Sua marca não pode se esconder atrás de posts fracos. Criamos criativos e conteúdos que chamam atenção, geram desejo e trazem clientes. Mesmo com baixo orçamento, entregamos resultados profissionais.
                 </p>
-                <div class="animate-fadeInUp" style="animation-delay: 0.6s;">
-                     <a href="#contato" class="inline-block bg-sky-500 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-sky-600 transition-all duration-300 shadow-lg shadow-sky-500/20">
+                <div class="animate-fade-in-up" style="animation-delay: 1.2s;">
+                     <a href="#contato" class="inline-block text-white font-bold py-3 px-8 rounded-full text-lg btn-translucent">
                         Quero impulsionar minha marca
                     </a>
                 </div>
@@ -126,39 +330,91 @@
         </section>
 
         <!-- ===== Seção do Portfólio ===== -->
-        <section id="portfolio" class="py-20 md:py-28 px-6 bg-gray-950/50 border-y border-gray-800">
-            <div class="container mx-auto">
+        <section id="portfolio" class="py-20 md:py-28 px-6 bg-black/20 backdrop-blur-md border-y border-gray-800">
+            <div class="container mx-auto max-w-4xl">
                 <div class="text-center mb-12 scroll-animate">
                     <h2 class="text-3xl md:text-4xl font-bold">Nosso Trabalho em Ação</h2>
-                    <p class="text-gray-400 mt-2">Veja como damos vida às ideias dos nossos clientes.</p>
+                    <p class="text-gray-400 mt-2">Veja o antes e depois do nosso trabalho. Arraste para comparar.</p>
                 </div>
 
-                <!-- Galeria de rolagem horizontal -->
-                <div id="portfolio-scroller-container" class="portfolio-gallery flex items-center gap-6 overflow-x-auto pb-6 cursor-grab active:cursor-grabbing scroll-animate" style="transition-delay: 150ms;">
-                    <!-- As imagens do portfólio serão injetadas aqui pelo JavaScript -->
-                </div>
-
-                <div class="text-center mt-12 scroll-animate" style="transition-delay: 300ms;">
-                    <button id="open-portfolio-modal" class="bg-gray-700 text-white font-semibold py-3 px-8 rounded-full hover:bg-gray-600 transition-colors duration-300 flex items-center gap-2 mx-auto">
-                        <i data-lucide="grid-3x3"></i>
-                        Ver Portfólio Completo
+                <div id="portfolio-carousel" class="relative scroll-animate" style="transition-delay: 150ms;">
+                    <div id="carousel-slides-container">
+                        <!-- Conteúdo gerado via JS -->
+                    </div>
+                    <button id="prev-slide" class="absolute top-1/2 left-2 md:-left-4 transform -translate-y-1/2 bg-white/10 hover:bg-white/20 p-3 rounded-full transition-colors z-10">
+                        <i data-lucide="chevron-left" class="text-white"></i>
                     </button>
+                    <button id="next-slide" class="absolute top-1/2 right-2 md:-right-4 transform -translate-y-1/2 bg-white/10 hover:bg-white/20 p-3 rounded-full transition-colors z-10">
+                        <i data-lucide="chevron-right" class="text-white"></i>
+                    </button>
+                </div>
+
+                <div id="carousel-dots" class="flex justify-center gap-2 mt-8 scroll-animate" style="transition-delay: 300ms;">
+                    <!-- Bolinhas geradas via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== NOVA SEÇÃO DE DEPOIMENTOS ===== -->
+        <section id="testimonials" class="py-20 md:py-28 px-6">
+            <div class="container mx-auto max-w-5xl">
+                <div class="text-center mb-12 scroll-animate">
+                    <h2 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">O que nossos clientes dizem</h2>
+                    <p class="text-gray-400 mt-2">Satisfação garantida é a nossa meta. Confira alguns feedbacks.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 scroll-animate" style="transition-delay: 150ms;">
+                    <!-- Depoimento 1 -->
+                    <div class="testimonial-card p-6 rounded-2xl shadow-xl">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-sky-400 flex items-center justify-center text-xl font-bold text-gray-800">C</div>
+                            <div>
+                                <h4 class="text-lg font-semibold">Carla S.</h4>
+                                <!-- Removido o @ -->
+                            </div>
+                        </div>
+                        <p class="text-gray-200 leading-relaxed">bah, o trabalho superou muito o que eu esperava! a agilidade e a qualidade foram demais. minha marca ta com outra cara, muito mais profissional e atrativa, kkkk.</p>
+                    </div>
+
+                    <!-- Depoimento 2 -->
+                    <div class="testimonial-card p-6 rounded-2xl shadow-xl">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-cyan-300 flex items-center justify-center text-xl font-bold text-gray-800">R</div>
+                            <div>
+                                <h4 class="text-lg font-semibold">Rafael M.</h4>
+                                <!-- Removido o @ -->
+                            </div>
+                        </div>
+                        <p class="text-gray-200 leading-relaxed">eles me ajudaram a entender meu publico e fazer posts que dao resultado. o suporte foi muito bom e o trabalho foi impecável, mesmo com pressa. recomendo d+!</p>
+                    </div>
+                    
+                    <!-- Depoimento 3 -->
+                    <div class="testimonial-card p-6 rounded-2xl shadow-xl">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-purple-400 flex items-center justify-center text-xl font-bold text-gray-800">L</div>
+                            <div>
+                                <h4 class="text-lg font-semibold">Lúcia A.</h4>
+                                <!-- Removido o @ -->
+                            </div>
+                        </div>
+                        <p class="text-gray-200 leading-relaxed">sempre tive dificuldade em fazer arte q chama a atencao. a equipe foi fundamental pra aumentar minhas vendas. muito profissional e criativo.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- ===== Seção de Contato ===== -->
-        <section id="contato" class="py-20 md:py-28 bg-gray-900/50 px-6">
+        <section id="contato" class="py-20 md:py-28 bg-black/20 backdrop-blur-md px-6">
             <div class="container mx-auto max-w-3xl text-center">
                 <div class="scroll-animate">
                     <h2 class="text-3xl md:text-4xl font-bold">Pronto para Começar?</h2>
                     <p class="text-gray-300 mt-4 text-lg">
-                        Sua marca merece ser vista. Vamos conversar sobre como podemos alcançar seus objetivos juntos. Sem compromisso, apenas ótimas ideias.
+                        Sua marca merece ser vista. Vamos conversar sobre como podemos alcançar seus objetivos juntos.
                     </p>
                 </div>
                 
                 <div class="mt-10 scroll-animate" style="transition-delay: 150ms;">
-                    <a href="https://wa.me/5500000000000?text=Olá!%20Vi%20o%20site%20de%20vocês%20e%20gostaria%20de%20fazer%20um%20orçamento." target="_blank" class="inline-block bg-green-500 text-white font-bold py-4 px-10 rounded-full text-xl hover:bg-green-600 transition-all duration-300 shadow-lg shadow-green-500/30 animate-pulse-slow">
+                    <a href="https://wa.me/5500000000000?text=Olá!%20Vi%20o%20site%20de%20vocês%20e%20gostaria%20de%20fazer%20um%20orçamento." target="_blank" class="inline-block text-white font-bold py-4 px-10 rounded-full text-xl btn-translucent btn-translucent-whatsapp">
                         Faça um Orçamento via WhatsApp
                     </a>
                 </div>
@@ -173,226 +429,253 @@
                 </div>
             </div>
         </section>
+
+        <!-- ===== NOVA SEÇÃO DE FAQ ===== -->
+        <section id="faq" class="py-20 md:py-28 px-6">
+            <div class="container mx-auto max-w-4xl">
+                <div class="text-center mb-12 scroll-animate">
+                    <h2 class="text-3xl md:text-4xl font-bold">Dúvidas Frequentes</h2>
+                    <p class="text-gray-400 mt-2">Tire suas dúvidas antes de começar a trabalhar conosco.</p>
+                </div>
+                
+                <div class="space-y-4 scroll-animate" style="transition-delay: 150ms;">
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-item p-6 rounded-xl border border-gray-700 hover:border-sky-400 transition-colors">
+                        <div class="flex items-center justify-between faq-question">
+                            <h3 class="text-lg font-semibold flex-1">Como funciona o processo de criação de artes?</h3>
+                            <i data-lucide="plus" class="faq-icon text-white ml-4"></i>
+                        </div>
+                        <div class="faq-answer-container">
+                            <p class="faq-answer text-gray-300 pr-8 pt-4">Iniciamos com uma conversa para entender suas necessidades e objetivos. Depois, criamos um briefing, apresentamos propostas de design e, após sua aprovação, desenvolvemos as artes e enviamos para você nos formatos combinados.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-item p-6 rounded-xl border border-gray-700 hover:border-sky-400 transition-colors">
+                        <div class="flex items-center justify-between faq-question">
+                            <h3 class="text-lg font-semibold flex-1">Qual é o prazo de entrega das artes?</h3>
+                            <i data-lucide="plus" class="faq-icon text-white ml-4"></i>
+                        </div>
+                        <div class="faq-answer-container">
+                            <p class="faq-answer text-gray-300 pr-8 pt-4">O prazo varia de acordo com o pacote de serviços e a complexidade do projeto. Geralmente, entregamos os primeiros resultados em até 24 horas após a confirmação do briefing e do pagamento.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-item p-6 rounded-xl border border-gray-700 hover:border-sky-400 transition-colors">
+                        <div class="flex items-center justify-between faq-question">
+                            <h3 class="text-lg font-semibold flex-1">Vocês trabalham com a criação de vídeos?</h3>
+                            <i data-lucide="plus" class="faq-icon text-white ml-4"></i>
+                        </div>
+                        <div class="faq-answer-container">
+                            <p class="faq-answer text-gray-300 pr-8 pt-4">Nossa agência trabalha apenas com a produção de criativos estáticos. Produzimos posts, folders, stories, banners, e trabalhos personalizados de acordo com a necessidade de cada cliente.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 4 -->
+                    <div class="faq-item p-6 rounded-xl border border-gray-700 hover:border-sky-400 transition-colors">
+                        <div class="flex items-center justify-between faq-question">
+                            <h3 class="text-lg font-semibold flex-1">Quais são as formas de pagamento?</h3>
+                            <i data-lucide="plus" class="faq-icon text-white ml-4"></i>
+                        </div>
+                        <div class="faq-answer-container">
+                            <p class="faq-answer text-gray-300 pr-8 pt-4">Aceitamos PIX e cartão de crédito. Oferecemos a opção de pagamento parcelado, em até 12x no cartão.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== NOVA SEÇÃO: SOBRE NÓS ===== -->
+        <section id="sobre" class="py-20 md:py-28 px-6 bg-black/20 backdrop-blur-md">
+            <div class="container mx-auto max-w-4xl text-center">
+                <div class="scroll-animate">
+                    <h2 class="text-3xl md:text-4xl font-bold">Nossa História</h2>
+                    <p class="text-gray-400 mt-2">Paixão, talento e excelência em cada detalhe.</p>
+                </div>
+                
+                <div class="mt-12 flex flex-col items-center space-y-8 scroll-animate" style="transition-delay: 180ms;">
+                    <img src="https://raw.githubusercontent.com/Solucoes-De-Marketing/MF/main/images/logo_V1_no_bg.png" alt="Logotipo da Empresa" class="w-36 h-36 rounded-full object-cover border-4 border-sky-400 shadow-xl">
+                    
+                    <p class="text-gray-300 text-lg leading-relaxed max-w-2xl mx-auto">
+                        A MF Soluções de Marketing foi fundada em 2025, por dois irmãos visionários do interior do Rio Grande do Sul. O que começou como um projeto movido pela paixão pelo design e pela excelência, rapidamente se tornou uma agência de destaque no mercado. Com um compromisso inabalável com a qualidade, já conquistamos e fidelizamos mais de 100 clientes recorrentes, produzindo artes que impulsionam marcas de todos os portes em todo o Brasil, incluindo empresas com atuação internacional. Nossa dedicação e carinho por cada projeto se refletem nos resultados, transformando ideias em realidade visual e superando as expectativas de nossos parceiros.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Rodapé ===== -->
+        <footer class="text-center p-8 border-t border-gray-800 bg-black/20">
+            <p class="text-gray-500">&copy; 2025 MF Soluções De Marketing. Todos os direitos reservados.</p>
+        </footer>
     </main>
 
-    <!-- ===== Rodapé ===== -->
-    <footer class="text-center p-8 border-t border-gray-800">
-        <p class="text-gray-500">&copy; 2025 MF Soluções De Marketing. Todos os direitos reservados.</p>
-    </footer>
-
-    <!-- ===== MODAL: Portfólio Completo ===== -->
-    <div id="portfolio-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden items-center justify-center p-4">
-        <div id="portfolio-modal-content" class="bg-gray-900/80 rounded-2xl w-full max-w-6xl h-full max-h-[90vh] shadow-2xl flex flex-col">
-            <header class="p-4 flex justify-between items-center border-b border-gray-700">
-                <h3 class="text-xl font-bold">Portfólio Completo</h3>
-                <button id="close-portfolio-modal" class="p-2 rounded-full hover:bg-gray-700 transition-colors">
-                    <i data-lucide="x"></i>
-                </button>
-            </header>
-            <div id="portfolio-grid-container" class="p-4 sm:p-6 md:p-8 overflow-y-auto">
-                 <!-- A grade de imagens do portfólio será injetada aqui -->
-            </div>
-        </div>
-    </div>
-    
-    <!-- ===== MODAL: Visualizador de Imagem ===== -->
-    <div id="image-viewer-modal" class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-4">
-        <button id="close-image-viewer" class="absolute top-4 right-4 p-2 rounded-full text-white bg-white/10 hover:bg-white/20 transition-colors z-10">
-            <i data-lucide="x"></i>
-        </button>
-        <div class="w-full h-full flex items-center justify-center">
-             <img id="modal-image-content" src="" alt="Imagem do portfólio em tamanho maior" class="max-w-[95%] max-h-[95%] object-contain rounded-lg">
-        </div>
-    </div>
-
-
     <script>
-        // Carrega os ícones do Lucide
-        lucide.createIcons();
+        document.addEventListener('DOMContentLoaded', function() {
+            // Carrega os ícones do Lucide
+            lucide.createIcons();
 
-        // ===== ANIMAÇÃO DE SCROLL =====
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    // Opcional: Descomente a linha abaixo para a animação rodar apenas uma vez
-                    // observer.unobserve(entry.target);
+            // ===== ANIMAÇÃO DA HEADLINE =====
+            const headlineText = "Transforme seu produto com imagens que vendem.";
+            const headlineElement = document.querySelector('.animate-headline');
+            headlineText.split(' ').forEach((word, index) => {
+                let wordHTML = '';
+                if (word.includes('vendem.')) {
+                    wordHTML = `<span class="bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-cyan-300 highlight-word" style="animation-delay: ${0.1 * index}s">${word}</span> `;
                 } else {
-                    // Opcional: Comente a linha abaixo para a animação rodar apenas uma vez
-                    entry.target.classList.remove('visible');
+                    wordHTML = `<span style="animation-delay: ${0.1 * index}s">${word}</span> `;
                 }
+                headlineElement.innerHTML += wordHTML;
             });
-        }, {
-            rootMargin: '0px 0px -100px 0px', // Inicia a animação um pouco antes do elemento estar 100% visível
-        });
 
-        const animatedElements = document.querySelectorAll('.scroll-animate');
-        animatedElements.forEach(el => observer.observe(el));
+            // ===== ANIMAÇÃO DE FUNDO ESTRELADO =====
+            const starBackground = document.getElementById('star-background');
+            const numStars = 150;
+            for (let i = 0; i < numStars; i++) {
+                let star = document.createElement('div');
+                star.className = 'star';
+                let x = Math.floor(Math.random() * 100);
+                let y = Math.floor(Math.random() * 2000); 
+                let duration = Math.random() * 20 + 15;
+                let size = Math.random() * 2.5;
+                
+                star.style.left = x + 'vw';
+                star.style.top = y + 'px';
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.animationDuration = duration + 's';
+                star.style.animationDelay = Math.random() * 5 + 's';
+                
+                starBackground.appendChild(star);
+            }
 
-        // ===== DADOS DO PORTFÓLIO =====
-        // COMENTÁRIO IMPORTANTE:
-        // Esta é a lista de itens do portfólio. Para adicionar suas próprias imagens,
-        // substitua os links de placeholder ('https://placehold.co/...') pelos seus
-        // links de imagem reais, mantendo a estrutura 'src' e 'alt'.
-        const portfolioItems = [
-            // EXEMPLO:
-            // { src: 'caminho/para/sua/imagem1.jpg', alt: 'Descrição da imagem 1' },
-            // { src: 'caminho/para/sua/imagem2.png', alt: 'Descrição da imagem 2' },
-            
-            // Imagens de placeholder (substitua pelos seus links)
-            { src: 'https://placehold.co/600x800/000000/FFFFFF?text=Projeto+1', alt: 'Placeholder para o Projeto 1' },
-            { src: 'https://placehold.co/600x800/000000/FFFFFF?text=Projeto+2', alt: 'Placeholder para o Projeto 2' },
-            { src: 'https://placehold.co/600x800/000000/FFFFFF?text=Projeto+3', alt: 'Placeholder para o Projeto 3' },
-            { src: 'https://placehold.co/600x800/000000/FFFFFF?text=Projeto+4', alt: 'Placeholder para o Projeto 4' },
-            { src: 'https://placehold.co/600x800/000000/FFFFFF?text=Projeto+5', alt: 'Placeholder para o Projeto 5' },
-            { src: 'https://placehold.co/600x800/000000/FFFFFF?text=Projeto+6', alt: 'Placeholder para o Projeto 6' },
-            { src: 'https://placehold.co/600x800/000000/FFFFFF?text=Projeto+7', alt: 'Placeholder para o Projeto 7' },
-            { src: 'https://github.com/matheusdefreitas277-hue/site-teste-01/blob/main/teste-imagem-02.jpg?raw=true', alt: 'Placeholder para o Projeto 8' },
-        ];
-
-        // Elementos do DOM
-        const scrollerContainer = document.getElementById('portfolio-scroller-container');
-        const gridContainer = document.getElementById('portfolio-grid-container');
-        
-        // Função para criar um item do portfólio
-        const createPortfolioElement = (item) => {
-            const div = document.createElement('div');
-            div.className = 'flex-shrink-0 w-72 h-96 rounded-lg overflow-hidden shadow-lg transform hover:scale-105 hover:shadow-sky-500/30 transition-all duration-300 cursor-pointer portfolio-item';
-            div.dataset.src = item.src;
-
-            const img = document.createElement('img');
-            img.src = item.src;
-            img.alt = item.alt;
-            img.className = 'w-full h-full object-cover';
-            
-            div.appendChild(img);
-            return div;
-        };
-        
-        // Função para criar um item da grade do portfólio
-        const createPortfolioGridElement = (item) => {
-            const div = document.createElement('div');
-            div.className = 'w-full h-64 bg-gray-800 rounded-lg overflow-hidden group transform hover:scale-105 transition-transform duration-300 cursor-pointer portfolio-item';
-            div.dataset.src = item.src;
-
-            const img = document.createElement('img');
-            img.src = item.src;
-            img.alt = item.alt;
-            img.className = 'w-full h-full object-cover';
-
-            div.appendChild(img);
-            return div;
-        }
-
-        // Popular o scroller e a grade
-        const populatePortfolios = () => {
-            scrollerContainer.innerHTML = '';
-            gridContainer.innerHTML = '<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>';
-            const grid = gridContainer.querySelector('.grid');
-
-            portfolioItems.forEach(item => {
-                scrollerContainer.appendChild(createPortfolioElement(item));
-                grid.appendChild(createPortfolioGridElement(item));
+            // ===== ANIMAÇÃO DE SCROLL =====
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, {
+                rootMargin: '0px 0px -100px 0px',
             });
-        };
 
-        populatePortfolios();
+            const animatedElements = document.querySelectorAll('.scroll-animate');
+            animatedElements.forEach(el => observer.observe(el));
 
-        // ===== LÓGICA DOS MODAIS =====
-        const body = document.body;
-        const portfolioModal = document.getElementById('portfolio-modal');
-        const imageViewerModal = document.getElementById('image-viewer-modal');
-        
-        // Modal do portfólio completo
-        const openPortfolioBtn = document.getElementById('open-portfolio-modal');
-        const closePortfolioBtn = document.getElementById('close-portfolio-modal');
+            // ===== LÓGICA DO CARROSSEL E SLIDER DE COMPARAÇÃO =====
+            const portfolioItems = [
+                { beforeSrc: 'https://raw.githubusercontent.com/Solucoes-De-Marketing/MF/main/imagens_02/PROJETO_04_01.jpeg', afterSrc: 'https://raw.githubusercontent.com/Solucoes-De-Marketing/MF/main/imagens_02/PROJETO_04_02.png', alt: 'Comparação do Projeto 1' },
+                { beforeSrc: 'https://raw.githubusercontent.com/Solucoes-De-Marketing/MF/main/imagens_02/PROJETO_08_01.jpg', afterSrc: 'https://raw.githubusercontent.com/Solucoes-De-Marketing/MF/main/imagens_02/PROJETO_08_04.png', alt: 'Comparação do Projeto 2' },
+                { beforeSrc: 'https://raw.githubusercontent.com/Solucoes-De-Marketing/MF/main/imagens_02/PROJETO_07_02.png', afterSrc: 'https://raw.githubusercontent.com/Solucoes-De-Marketing/MF/main/imagens_02/PROJETO_07_05.png', alt: 'Comparação do Projeto 3' },
+                { beforeSrc: 'https://raw.githubusercontent.com/Solucoes-De-Marketing/MF/main/imagens_02/PROJETO_05_01.jpg', afterSrc: 'https://raw.githubusercontent.com/Solucoes-De-Marketing/MF/main/imagens_02/PROJETO_06_02.png', alt: 'Comparação do Projeto 4' },
+            ];
+            
+            const slidesContainer = document.getElementById('carousel-slides-container');
+            const dotsContainer = document.getElementById('carousel-dots');
+            const prevButton = document.getElementById('prev-slide');
+            const nextButton = document.getElementById('next-slide');
 
-        const openPortfolioModal = () => {
-            portfolioModal.classList.remove('hidden');
-            portfolioModal.classList.add('flex');
-            body.classList.add('modal-open');
-        };
+            let currentSlide = 0;
 
-        const closePortfolioModal = () => {
-            portfolioModal.classList.add('hidden');
-            portfolioModal.classList.remove('flex');
-            body.classList.remove('modal-open');
-        };
+            portfolioItems.forEach((item, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'absolute inset-0 w-full h-full transition-opacity duration-500 ease-in-out';
+                slide.style.opacity = index === 0 ? '1' : '0';
+                slide.style.pointerEvents = index === 0 ? 'auto' : 'none';
 
-        openPortfolioBtn.addEventListener('click', openPortfolioModal);
-        closePortfolioBtn.addEventListener('click', closePortfolioModal);
-        portfolioModal.addEventListener('click', (e) => {
-            if (e.target === portfolioModal) {
-                closePortfolioModal();
+                slide.innerHTML = `
+                    <div class="comparison-slider" data-index="${index}">
+                        <img src="${item.afterSrc}" alt="${item.alt} - Depois">
+                        <div class="comparison-before-wrapper">
+                            <img src="${item.beforeSrc}" alt="${item.alt} - Antes">
+                        </div>
+                        <div class="comparison-handle"></div>
+                    </div>
+                `;
+                slidesContainer.appendChild(slide);
+
+                const dot = document.createElement('button');
+                dot.className = `w-3 h-3 rounded-full transition-colors ${index === 0 ? 'bg-sky-400' : 'bg-gray-600 hover:bg-gray-500'}`;
+                dot.addEventListener('click', () => goToSlide(index));
+                dotsContainer.appendChild(dot);
+            });
+
+            const slides = slidesContainer.children;
+            const dots = dotsContainer.children;
+            lucide.createIcons(); 
+
+            function goToSlide(index) {
+                // Deactivate the old slide and its dot
+                slides[currentSlide].style.opacity = '0';
+                slides[currentSlide].style.pointerEvents = 'none';
+                dots[currentSlide].classList.remove('bg-sky-400');
+                dots[currentSlide].classList.add('bg-gray-600', 'hover:bg-gray-500');
+
+                // Update to the new slide
+                currentSlide = index;
+
+                // Activate the new slide and its dot
+                slides[currentSlide].style.opacity = '1';
+                slides[currentSlide].style.pointerEvents = 'auto';
+                dots[currentSlide].classList.remove('bg-gray-600', 'hover:bg-gray-500');
+                dots[currentSlide].classList.add('bg-sky-400');
             }
-        });
 
-        // Modal do visualizador de imagem
-        const modalImage = document.getElementById('modal-image-content');
-        const closeImageViewerBtn = document.getElementById('close-image-viewer');
+            nextButton.addEventListener('click', () => {
+                goToSlide((currentSlide + 1) % slides.length);
+            });
 
-        const openImageViewer = (src) => {
-            modalImage.src = src;
-            imageViewerModal.classList.remove('hidden');
-            imageViewerModal.classList.add('flex');
-            body.classList.add('modal-open');
-        }
+            prevButton.addEventListener('click', () => {
+                goToSlide((currentSlide - 1 + slides.length) % slides.length);
+            });
 
-        const closeImageViewer = () => {
-            imageViewerModal.classList.add('hidden');
-            imageViewerModal.classList.remove('flex');
-            if (!portfolioModal.classList.contains('flex')) {
-                 body.classList.remove('modal-open');
-            }
-        }
+            document.querySelectorAll('.comparison-slider').forEach(slider => {
+                let isDragging = false;
+                const beforeWrapper = slider.querySelector('.comparison-before-wrapper');
+                const handle = slider.querySelector('.comparison-handle');
 
-        document.addEventListener('click', (e) => {
-            const portfolioItem = e.target.closest('.portfolio-item');
-            if (portfolioItem) {
-                openImageViewer(portfolioItem.dataset.src);
-            }
-        });
-        
-        closeImageViewerBtn.addEventListener('click', closeImageViewer);
-        imageViewerModal.addEventListener('click', (e) => {
-            if (e.target === imageViewerModal) {
-                closeImageViewer();
-            }
-        });
-        
-        // Fechar modais com a tecla 'Escape'
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closePortfolioModal();
-                closeImageViewer();
-            }
-        });
+                const startDrag = () => { isDragging = true; };
+                const stopDrag = () => { isDragging = false; };
 
-        // ===== EFEITO DE SCROLL HORIZONTAL COM O MOUSE (DRAG) =====
-        let isDown = false;
-        let startX;
-        let scrollLeft;
+                const onDrag = (e) => {
+                    if (!isDragging) return;
+                    e.preventDefault();
+                    const clientX = e.clientX || e.touches[0].clientX;
+                    const rect = slider.getBoundingClientRect();
+                    let x = Math.max(0, Math.min(clientX - rect.left, rect.width));
+                    const percentage = (x / rect.width) * 100;
+                    beforeWrapper.style.width = `${percentage}%`;
+                    handle.style.left = `${percentage}%`;
+                };
 
-        scrollerContainer.addEventListener('mousedown', (e) => {
-            isDown = true;
-            scrollerContainer.classList.add('active:cursor-grabbing');
-            startX = e.pageX - scrollerContainer.offsetLeft;
-            scrollLeft = scrollerContainer.scrollLeft;
-        });
-        scrollerContainer.addEventListener('mouseleave', () => {
-            isDown = false;
-            scrollerContainer.classList.remove('active:cursor-grabbing');
-        });
-        scrollerContainer.addEventListener('mouseup', () => {
-            isDown = false;
-            scrollerContainer.classList.remove('active:cursor-grabbing');
-        });
-        scrollerContainer.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - scrollerContainer.offsetLeft;
-            const walk = (x - startX) * 2; // O multiplicador '2' aumenta a velocidade do scroll
-            scrollerContainer.scrollLeft = scrollLeft - walk;
+                slider.addEventListener('mousedown', startDrag);
+                slider.addEventListener('touchstart', startDrag, { passive: true });
+                window.addEventListener('mouseup', stopDrag);
+                window.addEventListener('touchend', stopDrag);
+                window.addEventListener('mousemove', onDrag);
+                window.addEventListener('touchmove', onDrag, { passive: false });
+            });
+
+            // ===== LÓGICA DO FAQ =====
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    // Se o item já está ativo, feche-o
+                    if (item.classList.contains('active')) {
+                        item.classList.remove('active');
+                    } else {
+                        // Fecha todos os outros itens abertos
+                        faqItems.forEach(otherItem => {
+                            otherItem.classList.remove('active');
+                        });
+                        // Abre o item clicado
+                        item.classList.add('active');
+                    }
+                });
+            });
         });
     </script>
 </body>
